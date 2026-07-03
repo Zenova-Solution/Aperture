@@ -99,7 +99,7 @@ function ChartBackdrop() {
       aria-hidden
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio="none"
-      className="absolute inset-x-0 bottom-0 -z-10 h-64 w-full opacity-[0.12]"
+      className="absolute inset-x-0 bottom-0 -z-10 h-64 w-full opacity-[0.2]"
     >
       <defs>
         <linearGradient id="metrics-area" x1="0" y1="0" x2="0" y2="1">

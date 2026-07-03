@@ -16,8 +16,9 @@ export function Testimonials() {
   const rest = testimonials.filter((t) => !t.featured);
 
   return (
-    <section className="border-y border-border bg-surface/30 py-24 sm:py-32">
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+    <section className="relative border-y border-border bg-surface/30 py-24 sm:py-32">
+      <div aria-hidden className="glow-top absolute inset-0" />
+      <div className="relative mx-auto max-w-[1200px] px-6 sm:px-8">
         <SectionHeading eyebrow="Proof" title="The teams closest to their data trust Aperture" />
 
         <div className="mt-14 grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -36,7 +37,7 @@ export function Testimonials() {
 
           {rest.map((t, i) => (
             <Reveal key={t.name} delay={i * 90}>
-              <figure className="card flex h-full flex-col justify-between p-6">
+              <figure className="card flex h-full flex-col justify-between p-6 transition-all duration-300 hover:-translate-y-1 hover:border-border-strong">
                 <blockquote className="text-pretty leading-relaxed text-text">&ldquo;{t.quote}&rdquo;</blockquote>
                 <Attribution t={t} />
               </figure>

@@ -25,8 +25,9 @@ export function Workflow() {
   }, []);
 
   return (
-    <section id="workflow" className="border-y border-border bg-surface/30 py-24 sm:py-32">
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+    <section id="workflow" className="relative border-y border-border bg-surface/30 py-24 sm:py-32">
+      <div aria-hidden className="glow-top absolute inset-0" />
+      <div className="relative mx-auto max-w-[1200px] px-6 sm:px-8">
         <SectionHeading
           eyebrow="How it works"
           title="From raw tables to a decided next move"

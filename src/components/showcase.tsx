@@ -27,7 +27,7 @@ export function Showcase() {
 
   return (
     <section id="showcase" className="relative overflow-hidden py-24 sm:py-32">
-      <div aria-hidden className="bg-mesh absolute inset-0 -z-10 opacity-50" />
+      <div aria-hidden className="bg-mesh absolute inset-0 -z-10 opacity-80" />
       <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
         <SectionHeading
           eyebrow="See it work"

@@ -13,9 +13,9 @@ export function Integrations() {
         {/* orbit visual */}
         <Reveal variant="scale" className="order-2 lg:order-1">
           <div className="relative mx-auto aspect-square w-full max-w-md">
-            {/* rings */}
+            {/* rings — the dashed one slowly rotates for ambient motion */}
             <div className="absolute inset-[8%] rounded-full border border-border" />
-            <div className="absolute inset-[24%] rounded-full border border-dashed border-border" />
+            <div className="animate-spin-slow absolute inset-[24%] rounded-full border border-dashed border-border-strong" />
             <div className="absolute inset-[40%] rounded-full border border-border" />
             {/* ambient */}
             <div aria-hidden className="absolute inset-1/4 rounded-full bg-accent-soft blur-3xl" />

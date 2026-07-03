@@ -42,9 +42,10 @@ export function Footer() {
         </div>
       </div>
 
-      {/* oversized wordmark */}
-      <div aria-hidden className="pointer-events-none select-none overflow-hidden">
-        <div className="bg-gradient-to-b from-text/[0.06] to-transparent bg-clip-text text-center font-semibold leading-[0.8] tracking-tighter text-transparent [font-size:clamp(4rem,20vw,18rem)]">
+      {/* oversized wordmark — ember-lit finale */}
+      <div aria-hidden className="pointer-events-none relative select-none overflow-hidden">
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-[radial-gradient(60%_140%_at_50%_100%,rgba(255,106,61,0.14),transparent_70%)]" />
+        <div className="bg-gradient-to-b from-accent/25 via-accent/10 to-transparent bg-clip-text text-center font-semibold leading-[0.8] tracking-tighter text-transparent [font-size:clamp(4rem,20vw,18rem)]">
           {brand.name}
         </div>
       </div>

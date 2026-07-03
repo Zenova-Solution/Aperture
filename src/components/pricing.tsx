@@ -64,10 +64,10 @@ function PricingCard({ tier, annual }: { tier: Tier; annual: boolean }) {
 
   return (
     <div
-      className={`relative flex h-full flex-col rounded-2xl border p-7 ${
+      className={`relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-300 ${
         tier.featured
-          ? "border-accent-line bg-surface shadow-[0_0_60px_-20px_rgba(255,106,61,0.5)] lg:p-8"
-          : "border-border bg-surface/60"
+          ? "border-accent-line bg-surface shadow-[0_0_60px_-20px_rgba(255,106,61,0.5)] hover:shadow-[0_0_70px_-16px_rgba(255,106,61,0.6)] lg:p-8"
+          : "border-border bg-surface/60 hover:-translate-y-1 hover:border-border-strong"
       }`}
     >
       {tier.featured && (

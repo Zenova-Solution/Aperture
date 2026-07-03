@@ -79,6 +79,12 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+/* Anchor targets land below the fixed nav instead of underneath it */
+section[id],
+[id="top"] {
+  scroll-margin-top: 5.5rem;
+}
+
 body {
   background: var(--background);
   color: var(--text);
@@ -166,9 +172,13 @@ body {
 }
 .bg-mesh {
   background:
-    radial-gradient(60% 50% at 15% 10%, rgba(255, 106, 61, 0.14), transparent 60%),
-    radial-gradient(55% 55% at 85% 20%, rgba(111, 143, 166, 0.1), transparent 60%),
-    radial-gradient(50% 60% at 50% 100%, rgba(255, 106, 61, 0.08), transparent 70%);
+    radial-gradient(60% 50% at 15% 10%, rgba(255, 106, 61, 0.2), transparent 60%),
+    radial-gradient(55% 55% at 85% 20%, rgba(111, 143, 166, 0.14), transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, rgba(255, 106, 61, 0.12), transparent 70%);
+}
+/* Soft ember light bleeding from the top edge of a section band */
+.glow-top {
+  background: radial-gradient(50% 220px at 50% 0%, rgba(255, 106, 61, 0.1), transparent 70%);
 }
 /* SVG fractal noise, inlined so no network request */
 .bg-noise::before {
@@ -201,10 +211,11 @@ body {
 
 /* ============================================================
    Scroll-reveal (driven by ui/reveal.tsx via .is-visible)
+   Elements are only hidden when JS is confirmed present
+   (html.js, set by an inline script in layout.tsx) — so the
+   page is never blank without JavaScript or before hydration.
    ============================================================ */
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
   transition:
     opacity 0.8s var(--easing),
     transform 0.8s var(--easing),
@@ -212,17 +223,21 @@ body {
   transition-delay: var(--delay, 0ms);
   will-change: opacity, transform;
 }
-.reveal[data-variant="fade"] {
+.js .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.js .reveal[data-variant="fade"] {
   transform: none;
 }
-.reveal[data-variant="scale"] {
+.js .reveal[data-variant="scale"] {
   transform: translateY(20px) scale(0.97);
 }
-.reveal[data-variant="clip"] {
+.js .reveal[data-variant="clip"] {
   transform: none;
   clip-path: inset(0 0 100% 0);
 }
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: none;
   clip-path: inset(0 0 0 0);

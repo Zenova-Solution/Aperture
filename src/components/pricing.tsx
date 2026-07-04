@@ -23,18 +23,18 @@ export function Pricing() {
         <div
           role="group"
           aria-label="Billing period"
-          className="relative inline-flex rounded-full border border-border bg-surface/60 p-1 backdrop-blur"
+          className="relative inline-grid grid-cols-2 rounded-full border border-border bg-surface/60 p-1 backdrop-blur"
         >
           <span
             aria-hidden
-            className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-accent shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_4px_14px_-4px_rgba(255,106,61,0.6)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            className="pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-accent shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_4px_14px_-4px_rgba(255,106,61,0.6)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={{ transform: annual ? "translateX(100%)" : "translateX(0)" }}
           />
           <button
             type="button"
             aria-pressed={!annual}
             onClick={() => setAnnual(false)}
-            className={`relative z-10 flex-1 whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
+            className={`relative z-10 flex items-center justify-center whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
               !annual ? "text-[#0a0a0b]" : "text-text-secondary hover:text-text"
             }`}
           >
@@ -44,7 +44,7 @@ export function Pricing() {
             type="button"
             aria-pressed={annual}
             onClick={() => setAnnual(true)}
-            className={`relative z-10 flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
+            className={`relative z-10 flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
               annual ? "text-[#0a0a0b]" : "text-text-secondary hover:text-text"
             }`}
           >
@@ -61,7 +61,7 @@ export function Pricing() {
       </div>
 
       {/* tiers */}
-      <div className="mt-14 grid grid-cols-1 items-center gap-5 lg:grid-cols-3">
+      <div className="mt-14 grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3">
         {pricing.map((t, i) => (
           <Reveal key={t.name} delay={i * 90} className={t.featured ? "lg:-my-3" : ""}>
             <PricingCard tier={t} annual={annual} />
@@ -78,18 +78,20 @@ function PricingCard({ tier, annual }: { tier: Tier; annual: boolean }) {
   const isFree = price === 0;
 
   return (
-    <div
-      className={`relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-300 ${
-        tier.featured
-          ? "border-accent-line bg-surface shadow-[0_0_60px_-20px_rgba(255,106,61,0.5)] hover:shadow-[0_0_70px_-16px_rgba(255,106,61,0.6)] lg:p-8"
-          : "border-border bg-surface/60 hover:-translate-y-1 hover:border-border-strong"
-      }`}
-    >
+    <div className="relative h-full">
       {tier.featured && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#0a0a0b]">
+        <span className="absolute -top-3 left-1/2 z-20 -translate-x-1/2 rounded-full bg-accent px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#0a0a0b] ring-2 ring-background">
           Most popular
         </span>
       )}
+
+      <div
+        className={`flex h-full flex-col rounded-2xl border p-7 transition-all duration-300 ${
+          tier.featured
+            ? "border-accent-line bg-surface shadow-[0_0_60px_-20px_rgba(255,106,61,0.5)] hover:shadow-[0_0_70px_-16px_rgba(255,106,61,0.6)] lg:p-8"
+            : "border-border bg-surface/60 hover:-translate-y-1 hover:border-border-strong"
+        }`}
+      >
 
       <h3 className="text-lg font-semibold tracking-tight">{tier.name}</h3>
       <p className="mt-2 min-h-[2.5rem] text-sm leading-snug text-text-secondary">{tier.tagline}</p>
@@ -126,6 +128,7 @@ function PricingCard({ tier, annual }: { tier: Tier; annual: boolean }) {
           </li>
         ))}
       </ul>
+      </div>
     </div>
   );
 }

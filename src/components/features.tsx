@@ -150,8 +150,8 @@ function Sparkline() {
   const line = pts.map((v, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="h-11 w-full" preserveAspectRatio="none" aria-hidden>
-      <path d={line} fill="none" stroke="var(--chart-cool)" strokeWidth="1.8" strokeLinecap="round" />
-      <circle cx={x(9)} cy={y(70)} r="4" fill="var(--accent)" stroke="var(--surface-2)" strokeWidth="2" />
+      <path d={line} fill="none" stroke="var(--chart-cool)" strokeWidth="1.8" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <circle cx={x(9)} cy={y(70)} r="4" fill="var(--accent)" stroke="var(--surface-2)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }

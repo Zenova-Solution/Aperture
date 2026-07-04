@@ -68,8 +68,12 @@
 /* ============================================================
    Base
    ============================================================ */
-* {
-  border-color: var(--border);
+/* Layered so border-color utilities (border-accent-line, border-transparent, …)
+   can still override the default. Unlayered, this would beat @layer utilities. */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
 }
 
 html {
@@ -100,7 +104,6 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 /* Thin, unobtrusive scrollbar */
@@ -192,21 +195,25 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.glass {
-  background: color-mix(in oklab, var(--surface) 72%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+@layer components {
+  .glass {
+    background: color-mix(in oklab, var(--surface) 72%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
 }
 
 .hairline-t {
   border-top: 1px solid var(--border);
 }
 
-/* Card default */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+/* Card default — layered so utilities (bg-surface/90, rounded-*, …) can override */
+@layer components {
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
 }
 
 /* ============================================================
@@ -240,6 +247,11 @@ body {
 .js .reveal.is-visible {
   opacity: 1;
   transform: none;
+  will-change: auto;
+}
+/* Only the clip variant ever gets a clip-path — inset(0) is not "no clip",
+   it permanently cuts anything that overhangs the border box (badges, glows). */
+.js .reveal[data-variant="clip"].is-visible {
   clip-path: inset(0 0 0 0);
 }
 
@@ -338,6 +350,95 @@ body {
 }
 
 /* ============================================================
+   Aperture iris — hero centerpiece (pure CSS/SVG, no JS)
+   ============================================================ */
+.iris-stage {
+  display: grid;
+  place-items: center;
+  animation: iris-in 1.6s var(--easing) both;
+}
+@keyframes iris-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.iris-svg {
+  grid-area: 1 / 1;
+  width: clamp(480px, 92vw, 1060px);
+  aspect-ratio: 1 / 1;
+}
+
+/* Two rotors spin around the viewBox centre at different speeds/directions */
+.iris-rotor {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: spin-slow 140s linear infinite;
+  will-change: transform;
+}
+.iris-rotor--echo {
+  animation-duration: 200s;
+  animation-direction: reverse;
+}
+
+/* Each blade breathes along its own (pre-rotation) normal → aperture opens/closes.
+   translateY here is in user units; 36 shrinks the opening inradius 210 → 174. */
+.iris-blade {
+  stroke: var(--accent-line);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  animation: iris-breathe 9s ease-in-out infinite;
+}
+.iris-blade--echo {
+  stroke: rgba(255, 106, 61, 0.12);
+  stroke-width: 1;
+  animation-delay: -4.5s;
+}
+@keyframes iris-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(36px);
+  }
+}
+
+/* Central bloom swells as the iris closes */
+.iris-bloom {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  opacity: 0.85;
+  animation: iris-bloom 9s ease-in-out infinite;
+}
+@keyframes iris-bloom {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+/* Readability scrim over the iris, under the content */
+.iris-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 62% 52% at 50% 50%,
+    rgba(10, 10, 11, 0.62),
+    rgba(10, 10, 11, 0.22) 55%,
+    transparent 78%
+  );
+}
+
+/* ============================================================
    Reduced motion — degrade to instant / opacity-only
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
@@ -357,6 +458,12 @@ body {
     clip-path: none !important;
   }
   .animate-marquee {
+    animation: none !important;
+  }
+  /* Iris settles to a static, fully-open aperture with a soft glow */
+  .iris-rotor,
+  .iris-blade,
+  .iris-bloom {
     animation: none !important;
   }
 }

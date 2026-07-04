@@ -37,10 +37,12 @@ export function Cta() {
         <Reveal delay={240} className="mt-9 w-full max-w-md">
           {done ? (
             <div className="flex items-center justify-center gap-2.5 rounded-full border border-accent-line bg-accent-soft px-5 py-3.5 text-sm text-text">
-              <span className="grid h-5 w-5 place-items-center rounded-full bg-accent text-[#0a0a0b]">
+              <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent text-[#0a0a0b]">
                 <Check width={13} height={13} />
               </span>
-              Thanks — check <span className="font-medium">{email}</span> to get started.
+              <p className="min-w-0 [overflow-wrap:anywhere]">
+                Thanks — check <span className="font-medium">{email}</span> to get started.
+              </p>
             </div>
           ) : (
             <form

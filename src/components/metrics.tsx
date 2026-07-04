@@ -36,7 +36,7 @@ export function Metrics() {
         >
           {metrics.map((m) => (
             <div key={m.label} className="flex flex-col">
-              <span className="font-mono text-5xl font-semibold tracking-tight text-text sm:text-6xl">
+              <span className="font-mono text-4xl font-semibold tracking-tight text-text sm:text-6xl">
                 <CountUp metric={m} run={run} />
               </span>
               <span className="mt-3 text-sm leading-snug text-text-secondary">{m.label}</span>
@@ -108,7 +108,7 @@ function ChartBackdrop() {
         </linearGradient>
       </defs>
       <path d={area} fill="url(#metrics-area)" />
-      <path d={line} fill="none" stroke="var(--accent)" strokeWidth="2" />
+      <path d={line} fill="none" stroke="var(--accent)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }

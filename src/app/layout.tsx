@@ -22,7 +22,7 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const siteUrl = "https://aperture.example";
+const siteUrl = "https://aperture.zenova.agency";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
